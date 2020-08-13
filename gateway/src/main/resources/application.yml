@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service1  #请求 http://localhost:8100/data-service1/test会转发到data-producer服务，
+          uri: lb://user  #在服务注册中心找服务名为 data-producer的服务，
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - StripPrefix=1 #前缀， 在当前路径匹配中表示去掉第一个前缀 /data-service
+        - id: service2  # 请求 http://localhost:8100/data-service2/test转发到 data-consumer服务
+          uri: lb://role
+          predicates:
+            - Path=/role-service/**
+          filters:
+            - StripPrefix=1  #前缀， 在当前路径匹配中表示去掉第一个前缀 /data-service2
+      globalcors:  #跨越配置
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowCredentials: true
+            allowedHeaders: "*"
+org:
+  my:
+    jwt:
+      signKey: 123456     #解析jwt的秘钥
+      skip-auth-urls:      #跳过认证的路由
+        - /baidu
+        - /user-service/user/login
+        - /role-service/role/get
+server:
+  port: 8200
+
+eureka:
+  client:
+    service-url:
+      #defaultZone: http://172.16.4.237:8761/eureka
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true

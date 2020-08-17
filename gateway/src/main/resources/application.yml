@@ -29,8 +29,8 @@ org:
       signKey: 123456     #解析jwt的秘钥
       skip-auth-urls:      #跳过认证的路由
         - /baidu
-        - /user-service/user/login
-        - /role-service/role/get
+        - /user-service/**
+        - /role-service/**
 server:
   port: 8200
 

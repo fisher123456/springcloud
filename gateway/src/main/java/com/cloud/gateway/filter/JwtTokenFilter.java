@@ -37,6 +37,8 @@ import java.nio.charset.StandardCharsets;
 @Data
 public class JwtTokenFilter implements GlobalFilter, Ordered {
 
+    private native final Class<?> findLoadedClass0(String name);
+
     private String signKey;
 
     private String[] skipAuthUrls;

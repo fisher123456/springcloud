@@ -1,6 +1,7 @@
 package com.cloud.user.login.impl;
 
 import com.cloud.user.base.AjaxResult;
+import com.cloud.user.base.User;
 import com.cloud.user.login.UserApi;
 import com.cloud.user.remote.RoleApi;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,13 @@ public class UserController implements UserApi {
 
     @Override
     @RequestMapping("/login")
-    public AjaxResult login(String username, String password) {
-        AjaxResult ajaxResult = roleApi.get(2L);
+    public AjaxResult login(Integer id, String password) {
+        AjaxResult ajaxResult = roleApi.get(id);
         return AjaxResult.success(ajaxResult.get("data"));
+    }
+
+    @RequestMapping("/test")
+    public AjaxResult test(User user){
+       return roleApi.test(user);
     }
 }

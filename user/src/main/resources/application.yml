@@ -8,3 +8,6 @@ eureka:
     fetch-registry: true
 server:
   port: 8201
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
